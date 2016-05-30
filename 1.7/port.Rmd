@@ -1,0 +1,148 @@
+
+Financial Evaluation and Investment Strategy   
+Portfolio Optimization   
+Assignment 1.7
+
+
+```{r cache=TRUE}
+
+
+library(quadprog)
+library(stockPortfolio)
+
+stocks <- c(
+ "SPY",
+ "EFA",
+ "IWM",
+ "VWO",
+ "LQD",
+ "HYG")
+
+returns <- getReturns(stocks, freq="week")
+# returns$R - matrix(*,6) - cols are the stocks, rows are the weekly returns 
+
+# covariance of a stock with itself is just its variance.
+returns.cov <- cov(returns$R)
+
+# correlation of a stock with itself is always 1.
+returns.cor <- cor(returns$R)
+
+spy.var <- var(returns$R[,"SPY"])
+spy.sd <- sqrt(spy.var)
+efa.var <- var(returns$R[,"EFA"])
+efa.sd <- sqrt(efa.var)
+
+# relationship between covariance and correlation
+returns.cov["SPY","SPY"] / spy.sd / spy.sd
+returns.cov["SPY","EFA"] / spy.sd / efa.sd
+returns.cor["SPY","EFA"] 
+
+
+```
+
+
+### Question 1
+
+What's the min port var / port ret / sharpe when all weights = 0.25 ?
+
+```{r}
+
+stocks.covar <- matrix( c(
+                            0.0369,0.0522,0.0513,0.0406,
+                            0.0522,0.1552,0.1105,0.0576,
+                            0.0513,0.1105,0.1116,0.0526,
+                            0.0406,0.0576,0.0526,0.0506 ),
+                        nrow=4 )
+stocks.er <- matrix( c( 
+                        11.20,
+                        19.00,
+                        17.50,
+                        11.10 ) / 100,
+                     nrow=4)
+colnames(stocks.er) <- c("large", "small", "value", "growth")
+
+stocks.sd <- c( 
+                19.20,
+                39.40,
+                33.40,
+                22.50) / 100 
+colnames(stocks.sd) <- c("large", "small", "value", "growth")
+
+## ------------------------------------------------
+## What's the min port var / port ret / sharpe when all weights = 0.25 ?
+## ------------------------------------------------
+
+weights <- matrix( c(0.25, 0.25, 0.25, 0.25), nrow=4 )
+
+port.var <- t(weights) %*% stocks.covar %*% weights
+port.var
+port.sd <- sqrt(port.var)
+port.sd
+
+port.ret <- t(weights) %*% stocks.er
+port.ret
+
+riskfree.ret <- 3.5 / 100
+port.sharpe <- (port.ret - riskfree.ret) / port.sd
+port.sharpe
+```
+
+
+
+### Question 1b
+
+What's the max port return with similar risk as equally-weighted portfolio above, given you CANNOT short?
+
+```{r}
+
+source("eff.frontier.R")
+
+stocks.er.vec <- t(stocks.er)
+colnames(stocks.er.vec) <- c("large", "small", "value", "growth")
+eff.noshort <- eff.frontier(stocks.covar, stocks.er.vec , short="no", risk.free.rate=3.5/100)
+eff.noshort <- round(eff.noshort,6)
+
+# format(eff.noshort, digits=5, scientific=6)
+eff.noshort
+
+```
+
+### Question 2
+
+What's the max port return with similar risk as equally-weighted portfolio above, given you CAN short?
+
+```{r}
+eff.short <- eff.frontier(stocks.covar, stocks.er.vec, short="yes", risk.free.rate=3.5/100)
+
+eff.short <- round(eff.short, 6)
+eff.short
+
+eff.varEquals(eff.short, 0.2603)
+
+```
+
+
+### Question 3
+
+Find the weights that produce the min port variance, given you CANNOT short.
+
+```{r}
+
+# eff.noshort[ which(eff.noshort$Std.Dev == min(eff.noshort$Std.Dev)), ]
+eff.minVariance( eff.noshort )
+
+
+```
+
+### Question 4
+
+Find the weights that produce the max sharpe ratio, given you CANNOT short.
+
+
+```{r}
+
+# eff.noshort[ which(eff.noshort$sharpe == max(eff.noshort$sharpe)), ]
+eff.maxSharpe( eff.noshort )
+
+```
+

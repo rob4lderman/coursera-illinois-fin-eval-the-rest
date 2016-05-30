@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>Microsoft MSFT firm valuation</title>
+
+<script type="text/javascript">
+window.onload = function() {
+  var imgs = document.getElementsByTagName('img'), i, img;
+  for (i = 0; i < imgs.length; i++) {
+    img = imgs[i];
+    // center an image if it is the only element of its parent
+    if (img.parentElement.childElementCount === 1)
+      img.parentElement.style.textAlign = 'center';
+  }
+};
+</script>
+
+
+
+<!-- MathJax scripts -->
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 {
+   font-size:2.2em;
+}
+
+h2 {
+   font-size:1.8em;
+}
+
+h3 {
+   font-size:1.4em;
+}
+
+h4 {
+   font-size:1.0em;
+}
+
+h5 {
+   font-size:0.9em;
+}
+
+h6 {
+   font-size:0.8em;
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+pre {
+  overflow-x: auto;
+}
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * {
+      background: transparent !important;
+      color: black !important;
+      filter:none !important;
+      -ms-filter: none !important;
+   }
+
+   body {
+      font-size:12pt;
+      max-width:100%;
+   }
+
+   a, a:visited {
+      text-decoration: underline;
+   }
+
+   hr {
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote {
+      padding-right: 1em;
+      page-break-inside: avoid;
+   }
+
+   tr, img {
+      page-break-inside: avoid;
+   }
+
+   img {
+      max-width: 100% !important;
+   }
+
+   @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+   }
+
+   @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+   }
+
+   p, h2, h3 {
+      orphans: 3; widows: 3;
+   }
+
+   h2, h3 {
+      page-break-after: avoid;
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<h2>Microsoft MSFT firm valuation</h2>
+
+<h3>Rough approximations</h3>
+
+<ul>
+<li>&ldquo;Operating Income&rdquo; is a close approx of EBIT</li>
+<li>Effective corp tax rate approx 20-25% (not the 35% federal statutory rate)</li>
+</ul>
+
+<h3>Firm valuation questions</h3>
+
+<p>What&#39;s an appropriate discount rate?
+What&#39;s an appropriate growth rate?
+Is growth steady-state (can we value like a perpetuity)?
+Or should we forecast growth in the near term?</p>
+
+<p>What&#39;s the firm&#39;s capital structure look like?
+Debt / Equity ratio?
+If debt is low, then WACC will essentially be the required return on the firm&#39;s equity.
+Total firm value will be value of firm&#39;s stock (low debt obligations).</p>
+
+<h3>Data</h3>
+
+<p>Get data from:</p>
+
+<p>sec&#39;s website.</p>
+
+<p>morningstar.com
+    - accounting data for last 5 years</p>
+
+<p>finance.yahoo.com
+    - accounting data for last 3 years</p>
+
+<h3>Assignment questions</h3>
+
+<ol>
+<li>What&#39;s a reasonable required return for the firm (WACC) going forward?  Why?</li>
+<li>What is the free cash flow (FCF) of the firm in the most recent year?</li>
+<li>Is the firm in equilibrium (in terms of growth)? If so, what&#39;s your long term
+assumption for the growth rate?  If not, why not?</li>
+<li>Estimate the firm&#39;s equity value based on discount rate, FCF, and growth rate.
+Compare with the firm&#39;s actual equity value.</li>
+</ol>
+
+<h3>Firm Valuation via Discounted Cash Flow (Free Cash Flow) method</h3>
+
+<p>There are (at least) two ways to value a firm:</p>
+
+<ol>
+<li><strong>Market multiples</strong>: use the valuation ratios (e.g. P/E) of a comparable firm </li>
+<li><strong>Discounted Cash Flows</strong>: determine the firm&#39;s future cash flows, then discount those cash flows back to present value</li>
+</ol>
+
+<p>We&#39;re going to use #2, Discounted Cash Flows.  Within the Discounted Cash Flows method, there are (at least)
+three ways to measure cash flow:</p>
+
+<ol>
+<li>Capital cash flow - cash flow available to both equity and debt holders, debt interest deduction adjusted for in cash flow</li>
+<li>Equity cash flow - cash flow available to equity holders, after debt payments deducted</li>
+<li>Free cash flow - cash flow available to both equity and debt holders, debt interest deduction adjusted for in discount rate (WACC)</li>
+</ol>
+
+<p>We&#39;ll use #3, the &ldquo;free cash flow&rdquo;.  The firm valuation equation is:</p>
+
+<p>\[
+V_F = PV[FCF_T] + PV[TV_T] + NOA
+\]</p>
+
+<ul>
+<li> \(V_F\) is the value of the firm </li>
+<li> \(PV[FCF_T]\) is the present value of the firm&rsquo;s free cash flow up to period T </li>
+<li> \(PV[TV_T]\) is the present value of the firm&rsquo;s &ldquo;terminal value&rdquo; &ndash; all future cash flows after period T (perpetuity formula)</li>
+<li> NOA is the market value of any &ldquo;non-operating assets&rdquo; &ndash; stuff the firm owns but isn&rsquo;t really using (e.g. land)</li>
+</ul>
+
+<p>The total value of the firm is divided up between all claimants &ndash; i.e. all debt holders and all equity holders.</p>
+
+<p>\[
+V_F = V_debt + V_equity
+\]</p>
+
+<ul>
+<li> \(V_debt\) is the market value of the firm&rsquo;s DEBT </li>
+<li> \(V_equity\) is the market value of the firm&rsquo;s EQUITY </li>
+</ul>
+
+<p>In order to calculate the present value of future cash flows, we need to determine a suitable discount rate.  The discount
+rate usually applied to the free cash flow method is the <strong>weighted average cost of capital (WACC)</strong>.  The WACC is the
+weighted average of the required returns on the securities used to finance the firm&#39;s assets.  In other words, the firm
+has issued some mix of equity and debt in order to finance its assets (its &ldquo;cost of capital&rdquo;).  The required return on the 
+firm (the discount rate) is equal to the required return(s) on that debt and equity, weighted according to the relative
+proportions of debt and equity.  This is the &ldquo;weighted average cost of capital&rdquo;.</p>
+
+<p>The WACC (discount rate) formula:</p>
+
+<p>\[
+WACC = (1 + t_corp)(r_debt \cdot \frac{debt}{V_F}) + (r_equity + \frac{equity}{V_F})
+\]</p>
+
+<ul>
+<li> \(t_corp\) is the corporate tax rate on earnings </li>
+<li> \(r_debt\) is the corporate tax rate on earnings </li>
+</ul>
+
+</body>
+
+</html>

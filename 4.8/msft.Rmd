@@ -1,0 +1,713 @@
+
+TODO: analyze financial statements to determine, in broad strokes, how much $ going to shareholders, debtholders, back into the business, capex, random investments, acquisitions, etc
+
+## Microsoft MSFT firm valuation
+
+### Rough approximations
+
+* "Operating Income" is a close approx of EBIT
+* Effective corp tax rate approx 20-25% (not the 35% federal statutory rate)
+
+
+### Firm valuation questions
+
+What's an appropriate discount rate?
+What's an appropriate growth rate?
+Is growth steady-state (can we value like a perpetuity)?
+Or should we forecast growth in the near term?
+
+What's the firm's capital structure look like?
+Debt / Equity ratio?
+If debt is low, then WACC will essentially be the required return on the firm's equity.
+Total firm value will be value of firm's stock (low debt obligations).
+
+
+### Data
+
+Get data from:
+
+sec's website.
+
+morningstar.com
+    - accounting data for last 5 years
+
+finance.yahoo.com
+    - accounting data for last 3 years
+
+
+
+### Assignment questions
+
+1. What's a reasonable required return for the firm (WACC) going forward?  Why?
+2. What is the free cash flow (FCF) of the firm in the most recent year?
+3. Is the firm in equilibrium (in terms of growth)? If so, what's your long term
+assumption for the growth rate?  If not, why not?
+4. Estimate the firm's equity value based on discount rate, FCF, and growth rate.
+Compare with the firm's actual equity value.
+
+
+
+### Firm Valuation via Discounted Cash Flow (Free Cash Flow) method
+
+There are (at least) two ways to value a firm:
+
+1. **Market multiples**: use the valuation ratios (e.g. P/E) of a comparable firm 
+2. **Discounted Cash Flows**: determine the firm's future cash flows, then discount those cash flows back to present value
+
+We're going to use #2, Discounted Cash Flows.  Within the Discounted Cash Flows method, there are (at least)
+three ways to measure cash flow:
+
+1. Capital cash flow - cash flow available to both equity and debt holders, debt interest deduction adjusted for in cash flow
+2. Equity cash flow - cash flow available to equity holders, after debt payments deducted
+3. Free cash flow - cash flow available to both equity and debt holders, debt interest deduction adjusted for in discount rate (WACC)
+
+[Discounted Cash Flow (Free Cash Flow to Equity) Analysis - Investopedia](http://www.investopedia.com/university/dcf/)
+
+We'll use #3, the "free cash flow".  Free Cash Flow is the amount of cash that flows thru a firm during the reporting period,
+after all cash expenses are taken out.  Essentially "cash inflow" minus "cash outflow".  "Cash inflow" is everything that brings
+cash into the company, including sales but also borrowing.  "Cash outflow" is everything that sends money out of the
+firm, including operating costs, CAPEX purchases, taxes, and paying down loans.
+
+The firm valuation equation is:
+
+$$
+V_F = PV[FCF_T] + PV[TV_T] + NOA
+$$
+
+<ul>
+<li> \(V_F\) is the value of the firm </li>
+<li> \(PV[FCF_T]\) is the present value of the firm's free cash flow up to period T </li>
+<li> \(PV[TV_T]\) is the present value of the firm's "terminal value" -- all future cash flows after period T (perpetuity formula)</li>
+<li> NOA is the market value of any "non-operating assets" -- stuff the firm owns but isn't really using (e.g. land)</li>
+</ul>
+
+The total value of the firm is divided up between all claimants -- i.e. all debt holders and all equity holders.
+
+$$
+V_F = V_{debt} + V_{equity}
+$$
+
+<ul>
+<li> \(V_{debt}\) is the market value of the firm's DEBT </li>
+<li> \(V_{equity}\) is the market value of the firm's EQUITY </li>
+</ul>
+
+
+### Forecasting Revenue Growth
+
+Factors to consider:
+
+1. The firm's historic revenue growth rate
+2. Is the firm's market expanding or contracting (i.e. demand for products)
+3. The firm's market share
+4. Any new products driving sales
+5. Pricing changes
+6. Increasing competition
+7. Industry commoditization
+
+How far out to forecast?
+
+* Low growth, low margin, highly competitive industry: 1 year
+* Solid company, strong marketing/brand, regulatory: 5 years
+* High growth, dominant market position, high barriets to entry: 10 years
+
+It sometimes makes sense to do multiple projects, e.g. optimistic vs realistic
+
+
+### Forecasting Operating Costs Growth
+
+Factors to consider:
+
+1. The firm's historic operating margin ( operating-costs / revenue )
+2. Any cost-cutting programs (operating margin goes down)
+3. Increased competition (operating margin goes up)
+
+### Forecasting CAPEX Growth
+
+Factors to consider:
+
+1. The firm's historic CAPEX spending ( CAPEX / revenue )
+2. Is the firm's market expanding (increasing CAPEX) or contracting (decreasing CAPEX)
+3. Increasing competition (increasing CAPEX)
+4. Industry commoditization (decreasing CAPEX)
+5. New product lines (increasing CAPEX)
+
+
+### Forecasting changes to Working Capital
+
+**Working Capital**: The cash a business requires for day-to-day operations.  More specifically - short-term
+financing to maintain current assets such as Inventory.  Calculated by "Current Assets" - "Current Liabilities".
+
+Factors to consider:
+
+1. The firm's historic ratio of working capital to revenue
+2. Increased revenue growth typically requires increased working capital to cover larger Inventory and Accounts Receivable.
+
+
+
+### Determine the discount rate - WACC 
+
+In order to calculate the present value of future cash flows, we need to determine a suitable discount rate.
+
+There are a wide variety of discounting methods - often resembling more of an art than a science.  It is better to 
+be generally correct than precisely correct.
+
+The discount rate usually applied to the free cash flow method is the WACC.
+
+**Weighted Average Cost of Capital**:  The weighted average of a firm's Cost of Equity and its After-Tax Cost of Debt.
+Essentially it's the required rate-of-return on the securities (equity + debt) used to finance the firm's assets (its "Cost of Capital").
+The "weighted average" refers to assigning appropriate weights to the Cost of Equity and Cost of Debt, based on the
+firm's Capital Structure (the ratios of debt and equity).
+
+**Capital Structure**: The mix of debt and equity that a firm uses to finance its operations and assets.
+Debt comes in the form of bond issues or long-term notes payable, plus short-term debt such as working capital requirements.
+Equity is classified as common stock, preferred stock or retained earnings. 
+
+
+**Cost of Equity**: The cost required to maintain a share price that's acceptable to investors.  I.e. the required rate
+of return on an equity investment.  The most commonly accepted method of calculating the required return on equity (aka 
+Cost of Equity) is CAPM.
+
+The WACC (discount rate / required rate-of-return) formula:
+
+$$
+WACC = (1 - t_{corp})(r_{debt} \cdot \frac{V_{debt}}{V_F}) + (r_{equity} + \frac{V_{equity}}{V_F})
+$$
+
+<ul>
+<li> \(t_{corp}\) is the corporate tax rate on earnings </li>
+<li> \(r_{debt}\) is the required return (discount rate) on the firm's DEBT </li>
+<li> \(r_{equity}\) is the required return (discount rate) on the firm's EQUITY</li>
+</ul>
+
+
+The WACC is the discount rate that we'll use in the firm valuation formula to discount future cash flows.
+The WACC takes into account both the discount rate applied to debt (after tax-deductability on interest is accounted for)
+and the discount rate applied to equity.  These two discount rates are likely to be different, since they're based on different factors.
+
+r<sub>debt</sub>, the discount rate applied to debt, aka the "cost" of debt, aka the required return in order to meet the
+obligations of that debt, is based on factors such as:
+
+* the risk-free rate
+* the firm's credit spread (above risk-free)
+
+We can estimate r<sub>debt</sub> by looking up current market yields for the firm's bonds.
+
+<pre>
+Tax deductability of interest:  
+earnings = EBIT  
+taxes-before-deduction = t * ( earnings )  
+taxes-after-deduction = t * ( earnings - interest )  
+
+tax-deductable = taxes-before-deduction - taxes-after-deduction
+               = t * earnings - t * (earnings - interest)
+               = t * earnings - t * earnings + t * interest
+               = t * interest 
+               = t * r-debt * DEBT
+
+... or looking at it the other way ...
+
+earnings-before-deduction= (1 - t) * earnings
+earnings-after-deduction= (1 - t) * (earnings - interest)
+extra-earnings-via-deduction = earnings-before-deduction - earnings-after-deduction
+                             = (1 - t) * r-debt * DEBT
+</pre>
+
+
+r<sub>equity</sub> is the discount rate applied to equity, aka the "cost" of equity, aka the required return on equity, which
+is based on factors such as:
+
+* the risk-free rate
+* the firm's BETA (sensitivity to systemic risk)
+* equity market risk premium
+
+We can estimate r<sub>equity</sub> via models like CAPM.  73% of CFOs use CAPM.  34% use multi-factor CAPM.
+
+
+Note that a firm's financial structure (debt / equity) has an affect on its BETA.  The firm's earnings (EBIT)
+is paid out to both debt holders and equity holders.  Debt payments (interest payments), however, are FIXED.
+If the market has a bad year, causing the firm to have a bad year (lower EBIT), debt payments DO NOT CHANGE.
+Whatever's leftover goes to equity holders.  Therefore, the more debt a firm has, the more sensitive the equity
+portion is to market changes, meaning a higher BETA.
+
+
+### CAPM - Capital Asset Pricing Model
+
+The most common method for determining a firm's Cost of Equity - aka the required rate-of-return on an
+equity investment in the firm. I.e. the required rate-of-return on the share price.
+
+$$
+r_{equity} = r_{risk-free} + \beta ( r_{market} - r_{risk-free} )
+$$
+
+<ul>
+<li> \(r_{equity}\) is the required rate-of-return on the firm's EQUITY</li>
+<li> \(r_{risk-free}\) is the rate-of-return on "risk-free" assets, such as treasury bonds </li>
+<li> \(r_{market}\) is the rate-of-return of the overall equity market </li>
+<li> \(r_{market} - r_{risk-free} \) is the <b>Equity Market Risk Premium</b> </li>
+<li> \(\beta\) is the correlation coefficient relating the firm's \(r_{equity}\) to the \(r_{market}\).
+    <ul>
+        <li> \(\beta=1\) means the firm's share price moves in-line with the market.</li>
+        <li> \(\beta=2\) means the firm's share price exaggerates moves in the market (e.g. luxury goods).</li>
+        <li> \(\beta=0.5\) means the firm's share price mutes market movements (e.g. stable businesses, essential goods).</li>
+        <li> \(\beta=negative\) means the firm's share price moves in the opposite direction of the market (e.g. insurance companies).</li>
+</ul>
+
+So the required rate-of-return on equity is equal to the risk-free rate PLUS the Equity Market Risk Premium
+multiplied by the firm's Beta -- i.e. the market return (over the risk-free return) multiplied by how much
+the firm's share price historically correlates with the market.
+
+
+
+
+### Determine the Free Cash Flow
+
+A firm's Free Cash Flow in a given time period t, is calculated as follows:
+
+$$
+FCF_t = EBIT_t(1 - t_{corp}) + DEP_t - CAPEX_t - \Delta WC_t
+$$
+
+<ul>
+<li> \(EBIT_t\) is Earnings Before Interest and Taxes in period t </li>
+<li> \(t_{corp}\) is the corporate tax rate on earnings.  Essentially we're taxing
+EBI, which is not actually how it works.  Taxes are normally applied *after* interest is deducted from earnings.
+We compensate for this in the discount rate, WACC, which accounts for tax deductability in the discount rate applied
+to debt. </li>
+<li> \(DEP_t\): Depreciation and Amortization deducted from EBIT in period t.  We add it back in to determine FCF. </li>
+<li> \(CAPEX_t\): Capital expenditure in period t. CAPEX is not normally deducted from earnings at the time of the
+expenditure; it is deducted gradually via Depreciation.  Since FCF does not deduct Depreciation costs, it deducts
+CAPEX directly instead, in the time period it occurs. </li>
+<li> \(\Delta WC_t\): Change in working capital in period t (changes in inventories, accounts receivable, accounts payable).
+WC = Current Assets - Current Liabilities (where "current" means "this period").  Essentially captures changes
+in the firm's short-term assets and short-term liabilities, which indicate the firm's short-term cash flow health.  
+If WC decreases, that means the firm has either sold off assets are acquired new liabilities.  Either way, that
+has a POSITIVE effect on the cash flow ("cash in").  If WC increases, it means the firm bought new assets or
+paid off liabilities.  Either way, that's "cash out", and therefore has a NEGATIVE effect on cash flow.</li>
+</ul>
+
+All the factors that determine the FCF can be found on the firm's income statement and balance sheet.
+
+For example, here's MSFT financial statements for the past 5 years, provided by morningstart:
+[http://financials.morningstar.com/income-statement/is.html?t=MSFT&region=USA&culture=en_US](http://financials.morningstar.com/income-statement/is.html?t=MSFT&region=USA&culture=en_US)
+
+The time period is 2014-06 to 2015-06
+
+EBIT (aka "Operating Income" on Income Statement) = $18,161
+
+* Note: Operating Income/EBIT decreased from ~27K for 2011, 2013, 2014.
+* Decrease due to $10K in "other operating expenses".
+* TTM shows ~$10K in "other operating expenses" as well.  Not sure if we should include it in the forecast.
+* When EBIT dipped in 2012 and 2015, "Cash Flow From Operations -> Investment/asset impairment" showed ~$7K (0 in all other years)
+* Add that $7K back into cash flow to get roughly stable "cash flow from operations" over the last 5 years.
+
+t<sub>corp</sub> = 0.20  (assume 20%)
+
+DEP = $5,957  (from "Depreciation & Amortization" under "Cash flow from Operations" on Cash Flow Statement).
+
+* Note: D&A costs have doubled since 2012.
+
+CAPEX = $5,944 (from "Capital Expenditure" under "Free Cash Flow" on Cash Flow Statement)
+
+* Roughly equal to the diff of PP&E ("Property, Plant & Equipment) from 2014 to 2015 - $5300.
+* Can also be found under "Cash Flow From Investements -> Investments in PP&E" on Cash Flow Statement
+
+Change-in-WC = ~$6000K (change in "Current Assets" - "Current Liabilities")
+
+ON THE INCOME STATEMENT:
+
+[Understanding the income statement](http://www.magicdiligence.com/articles/understanding-the-income-statement)
+
+**TTM**: Trailing Twelve Months
+
+**Revenue**: Top-line revenue
+
+**Cost of Revenue**: similar to cost of goods sold.
+
+**Gross Profit**: Revenue - cost of goods sold
+
+**Operating expenses**:  SG&A (selling, general, and administrative), R&D, various other expenses not 
+directly related to the cost of goods sold
+
+**Operating Income**: EBIT = Gross Profit - Operating Expenses
+
+**Interest Expense**: The cost of debt in this time period
+
+**Other income (expense)**:  ?? Perhaps interest income from loans or sale of assets ??
+
+**Income before Taxes**: Operating Income - Interest Expense + Other Income
+
+**Provision for income taxes**: Taxes.  This / Income before Taxes = The estimated tax rate
+
+**Net Income**: = [Income-before-Taxes] - Taxes
+
+**Earnings per share**:  EPS = (Net Income - Dividends on preferred stock) / Average Outstanding Shares, i.e. average number of shares over the time period.
+
+**Diluted EPS**: EPS when all "convertible securities** are taken into account -- things like stock options, convertible 
+preferred shares, warrants, etc, all of which add to the actual number of outstanding shares and therefore reduce the EPS.
+
+**EBITDA**: Operating Income (EBIT) + Other Income + Depreciation & Amortization 
+
+
+ON THE CASH FLOW STATEMENT:
+
+[Understanding the cash flow statement](http://www.magicdiligence.com/understanding-the-cash-flow-statement)
+
+The Cash Flow Statement has 3 sections:
+
+1. Operating flows: net cash generated from operations (net income and changes in working capital)
+2. Investment flows: net result of CAPEX, investments, acquisitions, assets sold, etc
+3. Financing flows: net result of raising cash to fund other flows or repaying debt
+
+**Net Income**: Same as the income statement.
+
+**Depreciation & Amortization**: D&A are already deducted from Net Income.  However they do not represent actual cash flow;
+they represent a previous CAPEX that was not accounted for at purchase.  Cash flow accounts for CAPEX at the time of purchase.
+Thus we add D&A back into cash flow.
+
+**Investment losses (gains):** Assets that are sold can be sold for either a loss or gain.  If they are sold for a gain, the gain
+is added to Net Income on the income statement (Other Income). However, the Cash flow statement reports investments gains/losses
+in the 2nd section, Investment flows.  So the investment gain must be deducted from Net Income to avoid double accounting.
+
+**Stock Based Compensation**: Expensed on the income statement (already deducted from Net Income), but issuing stock does
+not involve cash flow;  therefore it is added back to Net Income on the Cash Flow Statement.
+
+
+
+### A few notes on Firm's Financial Statements
+
+Three major statements:
+
+1. Balance sheet: point-in-time statement of firm's assets, liabilities, and equity.
+2. Income statement: Explains how firm's equity value changes from last period's balance sheet to this period's balance sheet
+3. Cash flow statements: Explains how firm's cash holdings change from last period's balance sheet to this period's balance sheet
+
+Two methods/metrics for valuing assets: 
+
+1. Historical cost: the asset is forever valued at its original cost, not taking into account market appreciation/depreciation
+2. Fair value accounting: the asset value is "marked-to-market"
+
+
+**Operating Profit**: profit from operations (revenue-expenses), not taking into account: (1) how operations are financed, (2) taxes
+
+**"Capitalize" an expense**: The expense is treated like a capital asset (capital expenditure), instead of just a normal expense. 
+This is typically done for assets that have a finite lifespan/duration.  It is added to the asset-side of the balance sheet and is
+typically expensed over time via depreciation or amortization.
+
+**Depreciation and Amortization**: Any expensed item that has some "useful life" to its value can be expensed *over time* (instead of *all at once*
+(e.g. when the item is acquired)) via depreciation or amortization.  The difference between depreciation and amortization is:
+
+* *Depreciation*: real, tangible assets depreciate
+* *Amortization*: intangible expenses (e.g. license fees, IP fees, whatever) are amortized
+
+**Accounts payable**: Liabilities: future expenses / payments
+
+**Accounts receivable**: Assets: future income / receipts 
+
+**Book Value**: Net Asset Value, calculated as: Total Assets - Intangible Assets - Liabilities
+
+**Intangible Assets**: Patents, Goodwill, Brand. Assets that do not represent physical things like buildings or equipment.
+These are valued similar to the way physical assets are valued: by "marking them to market".
+
+**Current Asset**: Cash and other Assets that are expected to be converted to cash and used up within one year of the balance sheet statement.
+
+**Deferred Tax Asset**: Expected difference between taxes calculated on the income statements and taxes actually paid to the tax authority.
+Taxes on the income statement are applied to earnings, but do not take into consideration things like warranty expenses (customers returning
+goods) which retroactively lowers the earnings reported on the income statement and therefore lowers the actual taxes paid.
+
+**Goodwill**: Typically involved in acquisitions.  It's the amount paid over and above the Book Value of the target being acquired.
+
+**Deferred Revenue**: A liability on the balance sheet.  Advanced revenue for goods that have not actually been delivered to the customer.
+Once the goods are deliverd, deferred revenue becomes actual revenue.
+
+**Revenue**: all income from goods sold
+
+**Cost of goods sold**: how much the company paid for the goods it sold
+
+**Gross profit**: Revenue - Cost of goods sold
+
+**Operating profit**: Gross profit minus all other operational expenses (rent, salaries, depreciation/amortization, "other").
+Operational expenses DO NOT INCLUDE interest on debt, taxes. EBIT.
+
+EBIT: Earnings Before Interest and Taxes.  Tells you how much the company earned off their assets.  Ignores how the
+assets were financed and how the company pays taxes.  EBIT is a pretty good metric to use when comparing companies.
+Consider two companies with the exact same assets.  The EBIT of one might be greater than the other, even if the 
+net income is less, after interest charges and taxes are taken into account.
+
+**Pre-tax/taxable income**: Operating profit - interest expenses
+
+**Net income**: Pre-tax income - taxes = **EARNINGS**.  Difference in assets / equity from one balance sheet to the next.
+
+**P/E**: ratio of stock price to earnings.  Essentially its the value of the equity (and market cap).
+
+**P/E Conundrum**: P/E can be misleading when comparing two firms, especially if the firms are capitalized differently, e.g.
+if one has debt and the other doesn't.  P/E gives you the value of the equity.  The assets of a company are financed by both
+liabilities and equity.  If two firms have the same P/E, yet one is financed using half debt and half equity, while the other
+is financed fully with equity, then the implicit value of assets = liabilities + equity will be higher for the debt-financed
+firm.
+
+**Enterprise Value: EV**: market cap + debt (the liabilities side of the balance sheet) - cash (any cash assets)
+
+**EV/EBIT**: Useful multiple.  Basically the inverse of ROA=OperatingProfit/Assets.  
+
+A TYPICAL INCOME STATEMENT:
+----------------------------
+Revenue:            100k  ("top-line" revenue - cash received from customers)
+COGS:               -50k  (cost of goods sold - the cost of each incremental widget)
+                --------
+Gross profit:        50k
+SG&A:               -20K  (Selling, General, and Administrative expenses)
+D&A:                -10K  (depreciation and amortization)
+                   -----
+Operating Profit     30K    <-- EBIT, typically
+Interest on debt     -5K    
+                   -----
+Pre-tax income       25K
+Taxes                -8K    <-- taxes applied to income AFTER interest deducted (and technically after COGS, SG&A, D&A deducted also).
+                   -----
+Net Income/Earnings  17K
+Shares:              10k
+EPS:               $1.70
+
+ASSETS:
+Cash
+Inventory (merchandise not yet sold)
+Equipment
+Accounts Receivable
+
+LIABILITIES:
+Debt
+Accounts Payable
+
+
+
+
+### A few notes on EBITDA
+
+Earnings = Revenue - Expenses   
+Expenses = Normal expenses + interest + taxes + depreciation + amortization
+
+EBITDA adds the last four things, interest + taxes + depreciation + amortization, back in to Earnings.
+
+EBITDA = Earnings BEFORE
+
+* Interest - interest payments on debt
+* Taxes - taxes paid to uncle sam 
+* Depreciation - depreciation (expense) for previously acquired (but not expensed) capital assets / capital expenditures 
+* Amortization - one-time costs amortized over time (i.e. deducted from earnings (expensed) over time instead of all at once)
+
+
+
+Charlie Munger / Warren Buffett call EBITDA ["bullshit" earnings](http://www.forbes.com/sites/brentbeshore/2014/11/13/ebitda-is-bs-earnings/2/)
+
+> "A great example came in 2002, when WorldCom inflated its EBITDA by classifying $3.8 billion in normal expenses as CAPEX."
+
+By re-classifying as CAPEX, those expenses are added back into the EBITDA calculation, making the firm seem more valuable.
+
+
+
+
+
+### Why do corporations exist?
+
+Basically for two reasons:
+
+1. Limited liability
+2. Share ownership
+
+**Limited liability**: The corp owners' personal assets are sheilded from any lawsuits made against the corporation.
+
+**"pierce the corporate veil"**: when the owners of a corp are still held liable, regardless of limited liability.
+
+**Double taxation**:  applies to C-corp, not to S-corp, LLC, LP, or LLP.  
+
+1. Corporate profits are taxed
+2. After-tax profits become shareholder income, which is taxed again (capital gains, dividend rates)
+
+
+### Taxes
+
+**Deductions**: Deductions are made against your *income*, NOT the amount of taxes you would have paid before the deduction. 
+Deductions lower your stated income, thus lowering the amount of taxes you pay, since they're calculated based on the lower income.
+
+**Alternative Minimum Tax**: A separate, flatter tax schedule that stipulates a minimum tax that must be paid for a certain level of income.
+This prevents people from "deducting away" large portions of their income to avoid high tax bills.
+
+**Estate tax**: "Inheritance tax" or "Death tax".  Taxes owed on bequethed estate.  First $5M is exempt.  The rest is taxed at ~35%.
+
+* Reasons against: Unfair. Double taxation.
+* Reasons for: First $5M is exempt.  Tax is paid by inheritor, not by dead person.  Double-taxation exists elsewhere (corp -> dividends, income -> sales tax).
+Protects against dynastic wealth (Churchill: "A certain corrective against a race of idle rich")
+
+**Standard deduction**: $6100 (2011).  Deduction available to everyone.  If your itemized deductions do not exceed standard deduction, then you'd
+use the standard deduction.  Remember, deduction is applied to your stated income.
+
+**Personal exemption**: $3900 (2011).  Deducation available to everyone, especially single, independent filers.  If you are married or have
+dependents, you'd probably use a different deduction that's more valuable than the personal exemption.
+
+**FICA taxes**: Social security (6.2%) and medicare (1.45%).  Applies to full income (no deductions).  Employer pays equal amount on your behalf.
+
+**Tax credit**: Applied directly to taxes owed (unlike deductions, which are applied to your stated income).
+
+**Effective tax rate**: Taxes owed / Full income
+
+**Marriage penalty**: A married couple where both partners make a lot of money will pay HIGHER taxes when filing jointly than if they
+were not married and could file individually.  
+
+A couple where one partner makes much more than the other will pay LOWER taxes when filing jointly.  
+
+This is because the "married filing jointly" tax brackets increase more slowly than individual tax brackets, except at high salaries where
+the higher brackets come sooner (at lower joint income) than the individual tax schedule. 
+
+
+### Renting vs Buying a home
+
+Things to consider:
+
+* money "out the door" (i.e. spent costs, not toward equity).  rent vs. mortgage interest + prop tax - (interest tax deduction)
+* home appreciation
+* opportunity cost on down payment (if renting, down payment money can be invested elsewhere and gen a return)
+* price/rent ratios
+* home insurance
+* home upkeep
+* inflation
+
+[Khanacademy video](https://www.khanacademy.org/economics-finance-domain/core-finance/housing/renting-v-buying/v/renting-vs-buying-detailed-analysis)
+
+TODO: create my own "mortgage amortizer/calculator", like Khan's, but use R, and make it a web service.
+
+**5/1 Hybrid ARM**: Mix of fixed-rate and adjustable-rate mortgage.  The interest rate is fixed for the first 5 years, then it varies with the
+market interest rate.  "5/1" means the interest rate is reset after the first "5" years, then reset every "1" year after that.
+Typically the adjusted interest rate is set to the market rate (e.g. 1-year Treasury, LIBOR) plus some spread.  The spread is based on your credit.
+
+**Short sale**: Selling your house for less than what you owe, and trying to convince the bank to forgive the remaining balance.
+As an alternative to bankruptcy, which **KILLS YOUR CREDIT**.  Note that the bank may report you to a credit agency anyway.  Pay
+attention to the negotiations with the bank.  Also, the IRS may consider the forgiven balance as "income" and tax you on it.
+
+**Baloon Payment**: The amortization schedule is the same as a 30-year fixed, but the term of the loan is only 10 years. At 10
+years, the rest of the loan is due.  This is the "baloon payment", which covers the remainder of the loan. 
+
+You might be able to get a lower interest rate on a balloon payment mortgage over a regular 30-year fixed, since the bank is
+taking on less interest rate risk (only 10 years, not 30).  
+
+**Title search**: Searches county records for all deeds associated with the property/title.  A deed is registered with the county
+whenever the title changes ownership.  Other deeds include liens against the property. A lien is a claim made against the property,
+for money owed by the property owner.  The lien protects the lender in the event the loan is not re-paid, the lender can claim
+the property (the property is the collateral/recourse).
+
+**Title Insurance**: Protection against the rare event that a past deed is challenged in court, which could nullify your
+current deed. 
+
+**Escrow**: A trusted third party agent - an "escrow agent", manages the escrow account.  Deposits, down payments, etc are
+put into an escrow account until the transaction is complete.  The escrow account holds all funds/obligations from both the
+buyer and seller while the transaction is ongoing, as a trusted third party, so that the buyer and seller don't have to
+trust that the other party won't run off with the deposit or re-neg on the deal or whatever.
+
+**Escrow for Taxes and Insurance**: Extra money due on mortgage payment to cover the cost of property tax and house insurance.
+
+
+### Mortgage payment calculation
+
+**Mortgage calculator**:  The interest + principal of a typical mortgage is amortized over the life of the loan.  Amortization
+allows the loan to be paid back via a series of fixed monthly payments.  Constrast this with typical bonds, in which only 
+interest payments are made (the "coupon") during the life of the loan, then at the end (term) the entire principal is paid back all at once.
+
+Consider the following example: 
+
+* L = 200k loan
+* 30 years (n = 360 months)
+* 6% interest (i = 0.5% / mo, monthly interest)
+* P = monthly payment
+
+Assume interest compounds monthly.
+
+    0th month: balance: 200k
+    1st month: balance: 200k(1 + i) - P                 // monthly compounded interest, minus the fixed monthly payment
+    2nd month: balance: [200k(1 + i) - P](1 + i) - P    // balance after 1st month, compounded, minus payment
+    3rd month: balance: [[200k(1 + i) - P](1 + i) - P](1 + i) - P
+
+and so on...
+
+this equation ultimately = 0 (the balance goes to 0 after the 360th month).
+
+How do we solve for P?
+
+First let's solve for n=1 and n=2.  By doing so we will see a pattern emerge that will allow us to solve the problem
+for arbitrary n.  For n=1:
+
+$$
+\begin{align*}
+L(1+i) - P &= 0
+\\
+P &= L(1+i)
+\\
+\frac{P}{1+i} &= L
+\end{align*}
+$$
+
+For n=2:
+
+
+$$
+\begin{align*}
+[L(1+i) - P](1+i) - P &= 0
+\\
+\frac{P}{1+i} &= [L(1+i) - P]
+\\
+P + \frac{P}{1+i} &= L(1+i)
+\\
+\frac{P}{1+i} + \frac{P}{(1+i)^2} &= L
+\end{align*}
+$$
+
+Notice the pattern emerging.  We're taking the present value of each payment and adding them all up to get the value of the loan (makes sense).
+
+$$
+PV(P_1) + PV(P_2) + \cdots + PV(P_n) = L
+$$
+
+This can be re-written as:
+
+$$
+L = P[ \frac{1}{1+i} + \frac{1}{(1+i)^2} + \frac{1}{(1+i)^3} + \cdots + \frac{1}{(1+i)^n} ]
+$$
+
+The part in brackets is a geometric series.  To see this more clearly we can simplify our notation:
+
+$$
+\begin{align*}
+r &= \frac{1}{1+i}
+\\
+L &= P[ r + r^2 + r^3 + \cdots + r^n ]
+\end{align*}
+$$
+
+We can simplify the geometric series using a clever trick and some algebra.
+
+$$
+\begin{align*}
+S &=  r + r^2 + r^3 + \cdots + r^n 
+\\
+rS &= r^2 + r^3 + \cdots + r^{n + 1}
+\\
+S - rS &= r - r^{n + 1}
+\\
+S &= \frac{r - r^{n + 1}}{1-r}
+\end{align*}
+$$
+
+Subbing this back into the equation for L and solving for P:
+
+$$ 
+\begin{align*}
+L &= P[ \frac{r - r^{n + 1}}{1-r} ]
+\\
+L \frac{1-r}{r - r^{n + 1}} &= P
+\end{align*}
+$$
+
+And there ya go.
+
+
+
+

@@ -1,0 +1,136 @@
+
+## Fin-Eval: Assignment 4: Evaluate Performance of 50 Balanced Funds from 1995 - 2014
+
+Financial Evaluation and Strategy - Coursera  
+Module 3.7, Assignment 4  
+Sept 2015  
+Rob Alderman  
+
+
+### Notes
+
+Data source: [BalancedFunds_1995_2014.xlsx](BalancedFunds_1995_2014.xlsx)
+
+Financial data from 1995 - 2014:
+
+* Overall US stock: 11.9%
+* 1-month T-bills: 2.7%
+* SMB: 1.9%
+* HML: 3.0%
+
+
+**Balanced Fund**: Combines a stock component with a risk-free (t-bills) component.
+
+
+CAPM beta reflects the fund's "tilt" toward stocks.
+
+* beta = 0: equivalent to all t-bills
+* beta = 1: equivalent to all stock market
+* beta = 0.5: equivalent to 50/50 split
+
+CAPM alpha represents performance relative to benchmark, where benchmark takes into
+account the risk of the portfolio (w/r/t market risk).  
+
+In other words, a fund that invests in risk assets like Tiffany's will likely generate
+better returns than a fund invested in McDonalds.  We can't compare the returns of
+the two funds directly, since such a comparison does not account for risk.  
+
+CAPM takes risk into account.  Alpha represents performance relative to risk.  Positive
+alpha is good.  Negative alpha bad.  Positive alpha means the asset/fund generates positive
+returns even after controlling for risk.  Negative alpha means the asset/fund generates
+lower returns than its risk-adjusted benchmark (CAPM) would predict -- i.e its returns aren't
+worth its systemic risk.
+
+
+
+### Question 1: Explain alpha differences between CAPM and 3-Factor Model.
+
+For funds: 7, 9, 26, 27, 31, and 50.
+
+| fund  | r - RF | std.dev | sharpe         | capm a | capm b | 3-factor a | 3-factor market b | 3-factor SMB b | 3-factor HML b |
+| ----- | ------ | ------- | ------         | ------ | ------ | ---------- | ----------------- | -------------- | -------------- |
+| #7    | 6.4    | 11.2    | 0.571428571    |   2.1  | 0.46   |    2.9     | 0.42              |      -0.01     |    -0.13       |
+| 31    | 3.7    | 8.6     | 0.430232558    |   0.1  | 0.38   |    1       | 0.35              |      -0.13     |    -0.12       |
+| 26    | 3.3    | 12.2    | 0.270491803    |   -1.8 | 0.55   |    -0.7    | 0.52              |      -0.12     |    -0.16       |
+
+| 9     | 6.5    | 12.4    | 0.524193548    |   1.2  | 0.56   |    0.7     | 0.58              |       0.15     |     0.05       |
+| 27    | 3.9    | 9.7     | 0.402061856    |   0    | 0.41   |    -0.9    | 0.44              |      0.15      |    0.13        |
+| 50    | 4      | 14.3    | 0.27972028     |  -2.1  | 0.66   |    -3.1    | 0.69              |      0.2       |    0.13        |
+
+#### Fund #7
+
+The 3-factor alpha (2.9) is greater than the CAPM alpha (2.1).  The 3-factor HML beta is negative (-0.13), indicating the fund is tilted toward growth stocks over value stocks.  Growth stocks have historically under-performed value stocks.  Despite this disadvantage, the fund still outperforms its CAPM benchmark.  The fund's performance is even more impressive in the 3-factor model (i.e. larger alpha), since the 3-factor model corrects for the difference in returns between value and growth.
+
+#### Fund #9
+
+The 3-factor alpha (0.7) is lower than the CAPM alpha (1.2).  The 3-factor SMB beta is 0.15, so the fund is tilted toward small-cap stocks over large-cap.  Small-cap stocks have historically outperformed large-cap, which explains some of the outperformance (alpha) measured by CAPM.  However, when the SMB advantage is accounted for by the 3-factor model, the fund's outperformance (alpha) drops a bit.
+
+#### Fund #26
+
+The 3-factor alpha (-0.7) is greater than the CAPM alpha (-1.8).  The fund is negatively correlated with SMB and HML, which suggests it is tilted toward large-cap and growth stocks.  Both large-cap and growth stocks have historically underperformed small-cap and value stocks, which explains some of the fund's poor performance in the CAPM.  When the large-cap and growth disadvantages are accounted for by the 3-factor model, the fund's poor performance is less bad (i.e. larger alpha) than that measured by CAPM.
+
+#### Fund #27
+
+The 3-factor alpha (-0.9) is less than the CAPM alpha (0).  The fund is positively correlated with both SMB and HML, so it's tilted toward small-cap and value stocks, both of which have historically outperformed large-cap and growth.  Despite having these advantages, the fund does not outperform its CAPM benchmark (alpha=0).   When the SMB and HML advantages are taken into account by the 3-factor model, the fund's benchmark performance drops to -0.9.
+
+#### Fund #31
+
+The 3-factor alpha (1.0) is greater than the CAPM alpha (0.1).  The fund is negatively correlated with SMB and HML, meaning that it's tilted toward large-cap and growth stocks, both of which have historically been outperformed by small-cap and value stocks.  Despite this disadvantage, the fund still outperforms its CAPM benchmark (alpha=0.1).  When the disadvantage is accounted for by 3-factor, the fund's outperformance is more impressive, with a 3-factor alpha=1.0.
+
+
+#### Fund #50
+
+The 3-factor alpha (-3.1) is less than the CAPM alpha (-2.1).  The fund is positively correlated with both SMB and HML, meaning it's tilted toward small-cap and value stocks, both of which have historically outperformed large-cap and growth stocks.  Despite this advantage, the fund still underperforms its CAPM benchmark.  When the advantage is accounted for by the 3-factor model, the fund's underperformance looks even worse, indicated by the even lower 3-factor alpha.
+
+
+#### Notes
+
+* when CAPM alpha < 3-factor alpha, CAPM beta > 3-factor market beta, and 3-factor SMB and HML are both NEGATIVE.
+* when CAPM alpha > 3-factor alpha, CAPM beta < 3-factor market beta, and 3-factor SMB and HML are both POSITIVE.
+
+Why would the alpha be different in the first place?
+
+CAPM correlates asset returns with market returns.  CAPM establishes a BENCHMARK based on the
+asset's covariance with the market (i.e. its sensitivity to systemic risk).  Alpha represents 
+outperformance (excess returns) relative to the BENCHMARK.  
+
+3-factor correlates asset returns with market + SMB + HML.  3-factor establishes a BENCHMARK based
+on the asset's covariance with not only the market but also with the differences in returns for
+small-cap to large-cap and value to growth.  There are more explanatory variables in the model.
+The model takes into account the assets covariance with small-cap/large-cap and value/growth stocks.
+The model controls for the historical gaps in returns between these asset classes.
+
+The 3-Factor model accounts for the style of investment in the stock portion of the fund --
+i.e. the stock portion's allocation of small vs large cap, and value vs growth.  CAPM does
+not take into account the style of allocation.  So a fund invested in value over growth, taking
+advantage of historical outperformance (HML), might have a high alpha from CAPM, indicating
+outperformance, but that outperformance might be due to purely to HML.  The 3-factor model,
+after taking HML into account, might give a smaller alpha, since the fund's CAPM outperformance
+is explained by HML, therefore the fund has a lower outperformance (alpha) in the 3-factor model.
+
+Conversely, if a fund outperforms its CAPM benchmark, AND it has a negative correlation with SMB and
+HML in the 3-factor model, then we'd expect the 3-factor alpha to be even larger than the CAPM alpha.
+Why?  Because the funds outperformance w/r/t CAPM is NOT explained by historical outperformance
+of SMB and HML (evidenced by the negative correlations).  This fund outperforms DESPITE being invested
+in large cap and growth stocks.  So it makes sense it would outperform its 3-factor benchmark, which
+penalizes large cap and growth, even better than it outperforms its CAPM benchmark, which only considers
+overall systemic risk.
+
+
+### Question 2: Which fund would you MOST prefer to invest in, going forward, and why?
+
+Fund 1, 7, or 47.  They all have:
+
+* high sharpe ratios (>0.57), indicating good performance relative to risk
+* high CAPM alphas (>2) and 3-factor alphas (>2), indicating outperformance relative to benchmark
+
+
+### Question 3: Which fund would you LEAST prefer to invest in, going forward, and why?
+
+Fund 23 or 42.  They both have:
+
+* low sharpe ratios (<0.14), indicating not-so-good performance relative to risk
+* very low CAPM alphas (<-3) and 3-factor alphas (<-3), indicating underperformance relative to benchmark
+
+
+

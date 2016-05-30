@@ -1,0 +1,126 @@
+
+### [Intro to Regression](http://www.rga78.com/regression/):
+[1](http://www.rga78.com/blog/2015/8/20/intro-to-regression-part-1-what-is-regression-generally-speaking) .
+[2](http://www.rga78.com/blog/2015/8/23/intro-to-regression-part-2-simple-linear-regression-an-example) .
+[3](http://www.rga78.com/blog/2015/8/23/intro-to-regression-part-3-covariance-and-correlation) .
+[4](http://www.rga78.com/blog/2015/8/24/intro-to-regression-part-4-distribution-of-prediction-errors-residuals-and-goodness-of-fit-rsup2sup) .
+[5](http://www.rga78.com/blog/2015/8/25/intro-to-regression-part-5-interpretting-coefficients-centering-predictor-variables) .
+[6](http://www.rga78.com/blog/2015/8/26/intro-to-regression-part-6-regressing-against-a-factor-variable) .
+
+
+<div class="sqs-block-content html-block">
+    <h3 class="text-align-center">
+        <a href="/regression/">Intro to Regression</a>: 
+        <a href="/blog/2015/8/20/intro-to-regression-part-1-what-is-regression-generally-speaking">1</a> . 
+        <a href="/blog/2015/8/23/intro-to-regression-part-2-simple-linear-regression-an-example">2</a> . 
+        <a href="/blog/2015/8/23/intro-to-regression-part-3-covariance-and-correlation">3</a> . 
+        <a href="/blog/2015/8/24/intro-to-regression-part-4-distribution-of-prediction-errors-residuals-and-goodness-of-fit-rsup2sup">4</a> . 
+        <a href="/blog/2015/8/25/intro-to-regression-part-5-interpretting-coefficients-centering-predictor-variables">5</a> . 
+        <a href="/blog/2015/8/26/intro-to-regression-part-6-regressing-against-a-factor-variable">6</a>
+    </h3>
+</div>
+
+
+
+
+
+Portfolio allocation - two risky assets - large cap (rl) and small (rs) cap stocks
+
+Weight (w) is weight in large cap (rl).  (1-w) is weight in small cap.
+
+```{r}
+library(ggplot2)
+
+rl <- 8
+rs <- 15
+sd.l <- 25
+sd.s <- 50
+c <- 0.4
+cv <- 0.4 * sd.l * sd.s
+
+
+w <- seq(-1,2,0.01) # various weights
+sd.p <- sqrt( w^2 * sd.l^2 + (1-w)^2 * sd.s^2 + 2 * w * (1-w) * c * sd.l * sd.s )
+
+# NOTE - the return on portfolio (r.p) depends only on weights and asset returns.
+# doesn't depend on volatility or correlation between assets
+r.p <- w * rl + (1-w) * rs
+# r.p = w * (rl - rs) + rs
+# r.p - rs = w * (rl - rs)
+# (r.p - rs) / (rl - rs) = w
+
+qplot( x=sd.p, y=r.p ) + geom_vline(x=0) + geom_hline(y=0)
+min(sd.p)
+r.p[which.min(sd.p)]
+w[which.min(sd.p)]
+
+```
+
+### dominated when w=100% large 
+
+```{r}
+sd.p[which(round(sd.p,1) == sd.l)]
+r.p[which(round(sd.p,1) == sd.l)]
+w[which(round(sd.p,1) == sd.l)]
+```
+
+### volatility at r.p=20% 
+
+```{r}
+r.p[which(round(r.p,1) == 20)]
+sd.p[which(round(r.p,1) == 20)]
+
+```
+
+NOTE: the return on portfolio (r.p) depends only on weights and asset returns.
+It doesn't depend on volatility or correlation between assets.
+
+## Change the correlation from 0.4 to -0.8.  
+
+Changes the volatility.  No effect on r.p.
+
+
+```{r}
+c <- -0.8
+sd.p <- sqrt( w^2 * sd.l^2 + (1-w)^2 * sd.s^2 + 2 * w * (1-w) * c * sd.l * sd.s )
+
+qplot( x=sd.p, y=r.p ) + geom_vline(x=0) + geom_hline(y=0)
+min(sd.p)
+r.p[which.min(sd.p)]
+w[which.min(sd.p)]
+```
+
+### dominated when w=100% large 
+```{r}
+sd.p[which(round(sd.p) == sd.l)]
+r.p[which(round(sd.p) == sd.l)]
+w[which(round(sd.p) == sd.l)]
+```
+
+### volatility at r.p=20% 
+```{r}
+r.p[which(round(r.p,1) == 20)]
+sd.p[which(round(r.p,1) == 20)]
+```
+
+
+### Questions
+
+**Question 1**: After changing the correlation from 0.4 to -0.8, does the minimum portfolio variance increase or decrease?   
+Answer: decreases, from 24.9 to 10.5
+
+**Question 2**: Is 100% in r.l a dominated position?   
+Answer: When c=0.4, YES, because r.p (8.42) at min sd.p (24.9) is greater than r.l (8), while weight in r.l is less than 1 (0.94).  In other words,
+there are portfolios that return more than r.l with less volatility.   
+
+Answer: When c=-0.8, YES, because r.p (10.24) at min sd.p (10.5) is greater than r.l (8), while weight in r.l is less than 1 (0.68).  In other words,
+there are portfolios that return more than r.l with less volatility.
+
+**Question 3**: What's the composition and max return of a portfolio with volatility (sd.p) equal to large-cap volatility (sd.l)?  
+Answer: for c=0.4, w=0.88, r.p=8.84  
+Answer: for c=-0.8, w=0.37, r.p=12.41
+
+
+**Question 4**: Compare the two portfolios in terms of volatility at r.p=20%
+
+

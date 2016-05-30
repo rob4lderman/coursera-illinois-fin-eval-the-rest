@@ -1,0 +1,110 @@
+
+## Fin-Eval: Module 3.2 In-class Assignment
+
+Rob Alderman  
+Financial Evaluation and Strategy  
+Module 3.2  
+Sept 2015  
+
+### Objective
+
+Analyze the performance of value stocks (HML) from 1927 - 2014 in a CAPM framework. 
+
+
+### Load data
+
+```{r}
+Sys.setenv(JAVA_HOME="C:\\fox\\java\\jre")
+p <- Sys.getenv("PATH")
+p1 <- paste("C:\\fox\\java\\jre\\bin\\j9vm;", p, sep="")
+Sys.setenv(PATH=p1)
+
+library(xlsx)
+
+data <- read.xlsx("HML_1927_2014.xlsx", sheetIndex=1, rowIndex=4:1060,colIndex=1:4)
+str(data)
+head(data)
+
+
+
+### Q1.  What's the average monthly return for HML?
+
+```{r}
+with(data, mean(HML))
+
+```
+
+
+### Q2.  How much of HML return reflects performance beyond its benchmark (alpha)?
+
+```{r}
+
+model.hml <- lm(HML ~ Mkt_RF, data=data)
+summary(model.hml)
+model.hml.alpha <- coef(model.hml)["(Intercept)"]
+model.hml.beta <- coef(model.hml)["Mkt_RF"]
+
+library(ggplot2)
+qplot(y=HML, x=Mkt_RF, data=data) +
+    ggtitle("CAPM - HML") + 
+    geom_hline(y=0,colour="lightgray") +
+    geom_vline(x=0,colour="lightgray") +
+    geom_abline(intercept = model.hml.alpha, 
+                slope = model.hml.beta, 
+                colour="blue")
+
+# % of HML return that reflects outperformance of benchmark:
+model.hml.alpha / mean(data$HML)
+```
+
+### Q3.  How much of HML return reflects systemic risk (beta)?
+
+```{r}
+
+(mean(data$HML) - model.hml.alpha) / mean(data$HML)
+
+```
+
+
+### Q4.  Does HML perform better in good times or bad?  Seems like good.
+
+
+
+### Q5. What fraction of HML variability is explained by market-wide movements? (R<sup>2</sup>)
+
+```{r}
+summary(model.hml)$r.squared
+```
+
+
+
+### 6. Have the publications of papers on SMB (in 1980) and HML (in 1992/93) affected the returns for those asset classes?
+
+```{r}
+
+data.1980.down <- subset(data, date < 198001)
+data.1980.up <- subset(data, date >= 198001)
+
+data.1992.down <- subset(data, date < 199201)
+data.1992.up <- subset(data, date >= 199201)
+
+mean(data$Mkt_RF)
+mean(data.1980.down$Mkt_RF)
+mean(data.1980.up$Mkt_RF)
+mean(data.1992.down$Mkt_RF)
+mean(data.1992.up$Mkt_RF)
+
+mean(data$HML)
+mean(data.1992.down$HML)
+mean(data.1992.up$HML)  # after Fama's paper
+
+with(data, mean(SMB))
+with(data.1980.down, mean(SMB))
+with(data.1980.up, mean(SMB))
+with(data.1992.up, mean(SMB))
+
+
+model.hml.1992 <- lm(HML ~ Mkt_RF, data=data.1992.up)
+summary(model.hml.1992)
+```
+
